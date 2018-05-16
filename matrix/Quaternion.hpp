@@ -506,6 +506,28 @@ public:
         R_z(2) = a * a - b * b - c * c + d * d;
         return R_z;
     }
+    /**
+     * Corresponding body x-axis to an attitude quaternion /
+     * first orthogonal unit basis vector
+     *
+     * == first column of the equivalent rotation matrix
+     * but calculated more efficiently than a full conversion
+     */
+    Vector3<Type> dcm_x() const
+    {
+        const Quaternion &q = *this;
+        Vector3<Type> R_x;
+        const Type a = q(0);
+        const Type b = q(1);
+        const Type c = q(2);
+        const Type d = q(3);
+        R_x(0) = a * a + b * b - c * c - d * d;
+        R_x(1) = 2 * (b * c + a * d);
+        R_x(2) = 2 * (2 * b * d - 2 * a * c);
+        return R_x;
+    }
+
+
 
     /**
      * XXX DEPRECATED, can use assignment or ctor
